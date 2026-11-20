@@ -1,6 +1,6 @@
 ---
 name: critical-core
-description: Core human-factors rules for any interface where mistakes are expensive, plus routing to the domain skills. Covers the risk-control hierarchy (design out, guard, inform), confirmations that don't habituate, friction and warnings backed by evidence, undo and reversibility, alert tiering and budgets, mode and status visibility, failing visibly, trust in automation and AI, emotion design (anxiety, tone of voice, bad news, celebration, nudges, vulnerability), inclusion and accessibility (WCAG 2.2, European Accessibility Act, low literacy, low-end devices), visual language for calm, trustworthy, beautiful products, and an audit procedure. Use first for any fintech, payments, banking, insurance, healthcare, government, identity, automotive, operations or AI-agent interface, and when reviewing one ("is this safe?", "audit this flow", "make this feel trustworthy", "how much friction is right?").
+description: Core human-factors rules for any interface where mistakes are expensive, plus routing to the domain skills. Covers the risk-control hierarchy (design out, guard, inform), confirmations that don't habituate, friction and warnings backed by evidence, undo and reversibility, alert tiering and budgets, mode and status visibility, failing visibly, trust in automation and AI, emotion design (anxiety, tone of voice, bad news, celebration, nudges, vulnerability), inclusion and accessibility (WCAG 2.2, European Accessibility Act, low literacy, low-end devices), visual language for calm, trustworthy, beautiful products, UX laws for fintech, and an audit procedure with UX-law audits and competitor analysis. Use first for any fintech, payments, banking, insurance, healthcare, government, identity, automotive, operations or AI-agent interface, and when reviewing one ("is this safe?", "audit this flow", "make this feel trustworthy", "how much friction is right?", "apply UX laws", "compare these apps").
 ---
 
 # critical-core
@@ -27,7 +27,7 @@ Most real products need two or three skills together.
 5. **Check the inclusion floor** with `references/inclusion-and-accessibility.md`.
 6. **Design the look** with `references/visual-language.md`; tokens live in `/tokens`.
 7. **If automation or AI is involved,** apply `references/automation-and-ai-trust.md`.
-8. **Audit and test** with `references/review-and-research.md` before calling it done.
+8. **Audit and test** with `references/review-and-research.md` before calling it done. For a UX-law audit or competitor analysis, use `references/ux-laws-fintech.md`.
 
 | Reference | Load it for |
 |---|---|
@@ -38,6 +38,7 @@ Most real products need two or three skills together.
 | `references/visual-language.md` | What makes high-stakes products beautiful and trusted, style archetypes, type, colour, motion, glass, illustration, open design systems |
 | `references/automation-and-ai-trust.md` | Trust calibration, confidence display, AI assistants and agents, human handoff |
 | `references/review-and-research.md` | Audit procedure and finding template, comprehension testing, experiments with guardrails, validation |
+| `references/ux-laws-fintech.md` | UX laws (Fitts, Hick, Doherty, Tesler, Postel, Miller, Jakob, serial position, Von Restorff, Gestalt grouping, aesthetic-usability, peak-end, goal gradient, Zeigarnik, choice overload) and money biases (defaults, loss aversion, anchoring, present bias, pain of paying) applied to fintech, with overrides, misreadings, a law-based audit method and a competitor matrix |
 
 ## The twelve core rules
 

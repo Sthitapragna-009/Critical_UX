@@ -6,7 +6,7 @@ Source types: **[REG]** · **[STD]** · **[RES]** · **[PRAC]** · **[INF]** (se
 
 1. **Context.** Domain, market(s), users and their constraints, channels, automation level, critical tasks. If unknown, infer and state the assumption.
 2. **Look at the real thing**: screenshots at real size, a running build, or the code. For automotive, at viewing distance; for kiosks, standing.
-3. **Walk the checklists** in each loaded skill (critical-core and the domain skills).
+3. **Walk the checklists** in each loaded skill (critical-core and the domain skills). For a UX-law audit or a competitor comparison, use the method in `ux-laws-fintech.md` §7: measured findings per task, not "law applied / not applied".
 4. **Run the dark-pattern sweep**: the union of India's CCPA 13 and RBI 11, the EU DFA blacklist and DSA Art. 25, US enforcement precedents (money-flows/disclosure-and-ethics). RBI requires banks to user-test interfaces and audit them regularly [REG, IN].
 5. **Write findings** with the template below.
 6. **Prioritise**:

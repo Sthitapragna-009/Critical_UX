@@ -58,6 +58,9 @@ Paste a screenshot, a Figma frame export or your copy deck for audits. Claude re
 - Is this payment flow safe? Rate each risky step by severity and tell me what to design out, guard or explain.
 - Check this dashboard against WCAG 2.2 AA and the European Accessibility Act.
 - We're launching in Brazil and Singapore next quarter. What in this flow needs to change?
+- Do a UX-law audit of these three payment apps' scan-and-pay flows and compare them task by task. (Attach screenshots of each step.)
+- Which UX laws matter most on a loan offer screen, and where would applying them become a dark pattern?
+- Our home screen has 24 tiles and three banners. Use Hick's and Fitts's laws to redesign it for one-handed payments.
 
 ## Build it
 

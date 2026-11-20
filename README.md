@@ -81,6 +81,7 @@ Every text and border colour passes WCAG 2.2 AA in both themes. Market modes swa
 - *"Which chart should show a retirement projection?"*
 - *"Design the ADAS takeover UI for an L2 car."*
 - *"Design a medication order screen that prevents dose-notation errors."*
+- *"Do a UX-law audit of these three payment apps and compare them task by task."*
 
 For better answers, tell Claude the **market**, **who uses it**, **what can go wrong** and **what you want back**. More in the [prompt gallery](docs/prompts.md).
 
@@ -88,7 +89,7 @@ For better answers, tell Claude the **market**, **who uses it**, **what can go w
 
 | Skill | Use it for |
 |---|---|
-| `critical-core` | Start here. Risk-control hierarchy, confirmations that don't habituate, evidence-backed friction, undo, alert tiers and budgets, mode and status visibility, failing visibly, emotion and tone of voice, celebration and nudge ethics, vulnerability, inclusion (WCAG 2.2, European Accessibility Act), visual language, AI trust, audit procedure |
+| `critical-core` | Start here. Risk-control hierarchy, confirmations that don't habituate, evidence-backed friction, undo, alert tiers and budgets, mode and status visibility, failing visibly, emotion and tone of voice, celebration and nudge ethics, vulnerability, inclusion (WCAG 2.2, European Accessibility Act), visual language, AI trust, UX laws for fintech (Fitts, Hick, Jakob, peak-end, defaults, anchoring…) and how to audit with them, audit procedure |
 | `money-data` | Currency formatting, tabular figures, masking, gain/loss colour by market, chart chooser, honest axes, fan charts for projections, accessible scrubbing, payment and transfer status, records, statements, B2B dashboards and data grids |
 | `money-flows` | Amount entry, FX and fee quotes, payee verification (UK CoP, EU VoP, Australia), review screens, scam warnings, decline copy, disputes, KYC, passkeys, SCA/3DS, consent, credit and BNPL disclosure, a dark-pattern catalogue, B2B/B2C/B2B2C/D2C models, POS, ATMs, QR, USSD, wallets, notifications, AI-agent payments, rules for the UK, EU, US, India, Brazil, Singapore, Australia and more, and case studies (Wise, Monzo, Apple Card, Google Pay/Tez, PhonePe, Stripe, Nubank, Robinhood, M-Pesa…) |
 | `automotive-hmi` | Glance budgets (2 s / 12 s), lockouts, display angles, Euro NCAP 2026 physical controls, Android for Cars limits, clusters, tell-tales, HUDs, voice and LLM assistants, ADAS and automation (R171, R157, IIHS), mode display, escalation, takeover, EV, OTA, motorcycle and scooter dashboards, OEM case studies |
