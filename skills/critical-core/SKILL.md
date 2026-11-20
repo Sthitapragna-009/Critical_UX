@@ -5,7 +5,7 @@ description: Core human-factors rules for any interface where mistakes are expen
 
 # critical-core
 
-**criticalUX** is a suite of five skills for interfaces where a slip costs money, health, safety or rights. This one holds the rules every domain shares and tells you which other skill to load.
+**criticalUX** is a suite of four skills for interfaces where a slip costs money, health, safety or rights. This one holds the rules every domain shares and tells you which other skill to load.
 
 ## Route first
 
@@ -13,7 +13,7 @@ description: Core human-factors rules for any interface where mistakes are expen
 |---|---|
 | Showing money, balances, charts, statuses, records, dashboards | **money-data** |
 | Moving money, onboarding, KYC, consent, credit, checkout, B2B approvals, regulation by country, agent payments | **money-flows** |
-| Cars, motorcycles, scooters, clusters, infotainment, ADAS, EV | **automotive-hmi** |
+| Cars, motorcycles, scooters, clusters, infotainment, ADAS, EV | **automotive-hmi**, now a separate skill: [automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux) |
 | Healthcare, government services, identity, control rooms, fleet operations | **critical-domains** |
 
 Most real products need two or three skills together.

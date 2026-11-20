@@ -28,11 +28,11 @@ From PAIR [STD]:
 3. **The person decides on anything irreversible or high-severity.** AI may prepare; the person confirms with the same rules as a manual action.
 4. **Show what the AI did,** with one-step undo or correction.
 5. **Fail visibly**: "I'm not sure" is a valid answer and routes to a person.
-6. **Visible mode**: it's always clear whether a person or an agent is acting (money-flows/agent-payments; automotive-hmi automation).
+6. **Visible mode**: it's always clear whether a person or an agent is acting (money-flows/agent-payments; for vehicles, [automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux)).
 7. **Proactive suggestions are alerts** and share the alert budget.
 8. **No persuasion toward the provider's interest**: AI must not steer people to credit, upgrades or products against their stated goals (dark-pattern rules apply).
 9. **Record and expose** what the AI saw and did for disputes and audits.
 
 ## 5. Automation in operations and vehicles
 
-See automotive-hmi (automation and handover) and critical-domains (operations). Shared rules: monitor the human's attention, escalate in stages, plan handovers for the slowest person, keep skills alive with practice, and never let a weak mode display hide who is in control.
+See the automotive-hmi skill in [automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux) (automation and handover) and critical-domains (operations). Shared rules: monitor the human's attention, escalate in stages, plan handovers for the slowest person, keep skills alive with practice, and never let a weak mode display hide who is in control.

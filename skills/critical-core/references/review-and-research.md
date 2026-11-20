@@ -46,7 +46,7 @@ For high-stakes changes, guardrails include: fraud and scam losses, legitimate c
 
 - FDA: formative evaluations during development; validation with the final UI, representative users and all critical tasks, **at least 15 participants per distinct user population**; debrief to find root causes [REG].
 - NIST EHR protocol: application analysis → expert review → validation testing [REG].
-- Automotive: occlusion and eye-tracking against glance budgets, and a physical-control baseline (automotive-hmi).
+- Automotive: occlusion and eye-tracking against glance budgets, and a physical-control baseline ([automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux)).
 
 ## 6. Research methods worth borrowing
 

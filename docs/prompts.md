@@ -40,10 +40,7 @@ Paste a screenshot, a Figma frame export or your copy deck for audits. Claude re
 
 ## Automotive
 
-- Design the ADAS takeover request for an L2 car, from first cue to escalation.
-- Audit this infotainment screen against the 2-second glance rule and Euro NCAP 2026 physical-control requirements.
-- Design a scooter dashboard for an EV two-wheeler that's readable in direct sunlight.
-- How should an in-car voice assistant confirm an action that changes driving behaviour?
+The automotive skill moved to its own repo, [automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux), with its own [prompt gallery](https://github.com/Sthitapragna-009/automotive-hmi-ux/blob/main/docs/prompts.md).
 
 ## Healthcare, civic and operations
 

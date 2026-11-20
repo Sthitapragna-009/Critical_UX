@@ -19,7 +19,7 @@ Thanks for helping designers build interfaces that don't hurt people.
 | How money looks (numbers, charts, status, records, dashboards) | `skills/money-data/references/` |
 | How money moves (payments, KYC, disclosure, channels, business models, agents, case studies) | `skills/money-flows/references/` |
 | A country or region's rules | `skills/money-flows/references/jurisdictions/<market>.md` |
-| Cars, two-wheelers, ADAS, EV | `skills/automotive-hmi/references/` |
+| Cars, two-wheelers, ADAS, EV | The separate [automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux) repo |
 | Healthcare, civic and identity, control rooms | `skills/critical-domains/references/` |
 | Colours, type, spacing | `tokens/` |
 
@@ -32,8 +32,7 @@ The research gaps are listed at the end of each reference file. The biggest:
 - Primary NPCI UPI screen rules, Aadhaar eKYC and video KYC, Pix MED and Open Finance Brasil journeys
 - SGQR, PayNow, QRIS, PromptPay; right-to-left finance conventions; African mobile money beyond M-Pesa
 - Studies on undo windows, slide-to-pay, balance hiding, round-ups and visual trust cues
-- Two-wheeler glance research, HUDs, EV charging UX, in-car voice workload
-- ISA-18.2, ISO 15005/15008/16951/2575 and SAE J3016 details from the standards themselves
+- ISA-18.2 details from the standard itself
 
 ## Pull requests
 
