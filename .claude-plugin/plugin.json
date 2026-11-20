@@ -1,0 +1,13 @@
+{
+  "name": "critical-ux",
+  "version": "0.1.0",
+  "description": "criticalUX: Claude skills for designing interfaces where mistakes are expensive. Fintech (B2B, B2C, B2B2C, D2C), automotive HMI, healthcare, civic and identity services, and control rooms. Sourced rules for money display, charts, payments, confirmations, alerts, emotion design, regulation by jurisdiction, and human factors.",
+  "author": {
+    "name": "KSP",
+    "url": "https://kspportfolio-one.vercel.app"
+  },
+  "homepage": "https://github.com/Sthitapragna-009/Critical_UX",
+  "repository": "https://github.com/Sthitapragna-009/Critical_UX",
+  "license": "MIT AND CC-BY-4.0",
+  "keywords": ["design", "ux", "human-factors", "fintech", "payments", "banking", "data-visualization", "automotive", "hmi", "healthcare", "govtech", "accessibility", "dark-patterns", "high-stakes"]
+}

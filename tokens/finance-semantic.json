@@ -1,0 +1,36 @@
+{
+  "$description": "criticalUX semantic tokens. Original values (MIT). Text-level colours meet WCAG 4.5:1 on both surfaces of each theme; borders meet 3:1. Run `node scripts/check-contrast.mjs` after changing anything.",
+  "font": {
+    "family": { "ui": "Inter, 'IBM Plex Sans', 'Noto Sans', system-ui, sans-serif", "mono": "'IBM Plex Mono', ui-monospace, monospace" },
+    "numeric": "tabular-nums",
+    "size": { "caption": "12px", "body": "16px", "label": "14px", "title": "20px", "amount": "32px", "amount-hero": "44px" }
+  },
+  "space": { "1": "4px", "2": "8px", "3": "12px", "4": "16px", "5": "24px", "6": "32px", "7": "48px" },
+  "radius": { "control": "10px", "card": "16px", "pill": "999px" },
+  "motion": { "fast": "150ms", "base": "220ms", "slow": "320ms", "ease": "cubic-bezier(0.2, 0, 0, 1)" },
+  "color": {
+    "light": {
+      "surface": { "page": "#F5F6F8", "card": "#FFFFFF", "calm": "#F1F2F4" },
+      "text": { "primary": "#14171C", "muted": "#4F5663", "on-accent": "#FFFFFF" },
+      "border": { "default": "#7C8390", "subtle": "#D9DCE1" },
+      "accent": "#2B50E0",
+      "value": { "positive": "#0A7448", "negative": "#C42B21", "negative-accessible": "#B04F00", "neutral": "#14171C" },
+      "status": { "pending": "#5B4BC4", "success": "#0A7448", "warning": "#8A5800", "error": "#C42B21", "info": "#1F5BC8" }
+    },
+    "dark": {
+      "surface": { "page": "#0F1115", "card": "#181B21", "calm": "#14161B" },
+      "text": { "primary": "#F2F4F7", "muted": "#A9B0BC", "on-accent": "#0F1115" },
+      "border": { "default": "#6B7383", "subtle": "#2A2F38" },
+      "accent": "#7D93FF",
+      "value": { "positive": "#3DD68C", "negative": "#FF6B5E", "negative-accessible": "#FF9A3D", "neutral": "#F2F4F7" },
+      "status": { "pending": "#A99BFF", "success": "#3DD68C", "warning": "#F2B84B", "error": "#FF6B5E", "info": "#6FA4FF" }
+    }
+  },
+  "market": {
+    "$description": "Resolve value.up / value.down per market. Red-up markets: zh-CN, ja-JP, zh-TW market data (verified); ko-KR widely reported, not verified. Always pair with sign and glyph.",
+    "green-up": { "up": "value.positive", "down": "value.negative" },
+    "red-up": { "up": "value.negative", "down": "value.positive" },
+    "colour-blind": { "up": "info", "down": "value.negative-accessible" }
+  },
+  "glyph": { "up": "▲", "down": "▼", "flat": "–" }
+}

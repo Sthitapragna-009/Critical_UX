@@ -1,0 +1,16 @@
+{
+  "name": "criticalux",
+  "description": "criticalUX: Claude skills for high-stakes interfaces: fintech, automotive HMI, healthcare, civic and identity services, and control rooms.",
+  "owner": {
+    "name": "KSP",
+    "url": "https://kspportfolio-one.vercel.app"
+  },
+  "plugins": [
+    {
+      "name": "critical-ux",
+      "source": "./",
+      "description": "Human-factors and fintech UX skills for interfaces where mistakes are expensive.",
+      "version": "0.1.0"
+    }
+  ]
+}

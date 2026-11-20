@@ -1,0 +1,11 @@
+# Notice
+
+criticalUX is an independent community project. It is not made, endorsed or reviewed by any company, regulator or standards body it mentions.
+
+- **Not legal, medical or engineering advice.** The skills summarise public regulations, standards and research as design guidance. Rules change; read the linked primary source and check with your compliance, clinical-safety or functional-safety team before relying on any rule for a shipping product.
+- **Paraphrased, not copied.** Regulations, standards, design systems and articles are summarised in original words with links. Short quotations are limited to a few words where wording matters. Paywalled standards (ISO, SAE, ISA, IEC) were not reproduced; where the skills mention them they say what was and wasn't verified.
+- **Confidence tags.** Every rule is tagged by source type: law or standard, platform guideline, published research, documented company practice, or criticalUX inference. Inferences are our own reasoning, not a source's claim.
+- **Trademarks.** Company, product and programme names (for example Apple, Apple Pay, Apple Card, CarPlay, Google Pay, Android, Stripe, Wise, Monzo, Revolut, Nubank, PhonePe, Paytm, CRED, Razorpay, Coinbase, Robinhood, Cash App, Venmo, PayPal, Klarna, Square, Plaid, Mercury, Ramp, M-Pesa, Visa, Mastercard, UPI, Pix, Tesla, Volkswagen, BMW, Mercedes-Benz, Hyundai, Polestar, Royal Enfield, Ather) are trademarks of their owners, used only to name what the guidance describes.
+- **No brand assets.** The repo ships no logos, card-network marks, proprietary fonts (such as Wise Sans, Aeonik or Söhne), brand colour palettes or screenshots. Style archetypes have descriptive names. Official marks (Apple Pay buttons, card-network logos, deposit-insurance signs) must come from their owners' official resources and follow their rules.
+- **Third-party design systems.** Salt (JPMorgan Chase), Coinbase CDS and CRED NeoPOP are Apache-2.0; Razorpay Blade is MIT. criticalUX links to them and does not include their code or tokens. If you adapt their code, keep their licence and NOTICE files.
+- **Tokens are original.** Values in `tokens/` were chosen for this project and checked with `scripts/check-contrast.mjs`.

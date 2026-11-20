@@ -1,0 +1,115 @@
+/* criticalUX tokens (MIT). Original values. See tokens/finance-semantic.json. */
+
+:root {
+  --cx-font-ui: Inter, "IBM Plex Sans", "Noto Sans", system-ui, sans-serif;
+  --cx-font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --cx-ease: cubic-bezier(0.2, 0, 0, 1);
+  --cx-fast: 150ms;
+  --cx-base: 220ms;
+  --cx-radius-control: 10px;
+  --cx-radius-card: 16px;
+
+  --cx-page: #F5F6F8;
+  --cx-card: #FFFFFF;
+  --cx-calm: #F1F2F4;
+  --cx-text: #14171C;
+  --cx-text-muted: #4F5663;
+  --cx-on-accent: #FFFFFF;
+  --cx-border: #7C8390;
+  --cx-border-subtle: #D9DCE1;
+  --cx-accent: #2B50E0;
+
+  --cx-positive: #0A7448;
+  --cx-negative: #C42B21;
+  --cx-negative-accessible: #B04F00;
+  --cx-pending: #5B4BC4;
+  --cx-warning: #8A5800;
+  --cx-info: #1F5BC8;
+
+  /* Market convention: default green-up. */
+  --cx-up: var(--cx-positive);
+  --cx-down: var(--cx-negative);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cx-page: #0F1115;
+    --cx-card: #181B21;
+    --cx-calm: #14161B;
+    --cx-text: #F2F4F7;
+    --cx-text-muted: #A9B0BC;
+    --cx-on-accent: #0F1115;
+    --cx-border: #6B7383;
+    --cx-border-subtle: #2A2F38;
+    --cx-accent: #7D93FF;
+    --cx-positive: #3DD68C;
+    --cx-negative: #FF6B5E;
+    --cx-negative-accessible: #FF9A3D;
+    --cx-pending: #A99BFF;
+    --cx-warning: #F2B84B;
+    --cx-info: #6FA4FF;
+  }
+}
+
+[data-theme="dark"] {
+  --cx-page: #0F1115;
+  --cx-card: #181B21;
+  --cx-calm: #14161B;
+  --cx-text: #F2F4F7;
+  --cx-text-muted: #A9B0BC;
+  --cx-on-accent: #0F1115;
+  --cx-border: #6B7383;
+  --cx-border-subtle: #2A2F38;
+  --cx-accent: #7D93FF;
+  --cx-positive: #3DD68C;
+  --cx-negative: #FF6B5E;
+  --cx-negative-accessible: #FF9A3D;
+  --cx-pending: #A99BFF;
+  --cx-warning: #F2B84B;
+  --cx-info: #6FA4FF;
+}
+
+/* Red-up markets (mainland China, Japan, Taiwan market data). */
+[data-market="red-up"] {
+  --cx-up: var(--cx-negative);
+  --cx-down: var(--cx-positive);
+}
+
+/* Colour-blind-safe pair, user setting. */
+[data-market="colour-blind"] {
+  --cx-up: var(--cx-info);
+  --cx-down: var(--cx-negative-accessible);
+}
+
+/* Calm surfaces for fraud, debt, disputes, bereavement. */
+.cx-calm { background: var(--cx-calm); }
+
+/* Numbers */
+.cx-amount,
+.cx-num,
+td.cx-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+.cx-ref { font-family: var(--cx-font-mono); font-variant-numeric: slashed-zero tabular-nums; }
+.cx-amount { font-size: 32px; font-weight: 600; letter-spacing: -0.01em; color: var(--cx-text); }
+.cx-delta--up { color: var(--cx-up); }
+.cx-delta--down { color: var(--cx-down); }
+.cx-delta--up::before { content: "▲ "; }
+.cx-delta--down::before { content: "▼ "; }
+
+/* Status chips: icon + word + colour, never colour alone. */
+.cx-status { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
+.cx-status--pending { color: var(--cx-pending); }
+.cx-status--success { color: var(--cx-positive); }
+.cx-status--warning { color: var(--cx-warning); }
+.cx-status--error { color: var(--cx-negative); }
+
+/* Hidden-balance privacy mode. Visual only: also replace the text content
+   (e.g. "Balance hidden") so screen readers don't read the value aloud. */
+[data-privacy="on"] .cx-amount,
+[data-privacy="on"] .cx-num { filter: blur(8px); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

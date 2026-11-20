@@ -1,0 +1,12 @@
+# United Kingdom
+
+| Rule | Applies from | What the UI must do | Source |
+|---|---|---|---|
+| Confirmation of Payee | 2020 (expanded by PSR in 2024) | Name check on new payees; match / close match (show real name) / no match / type mismatch / unable to check / no account. Never show reason codes verbatim. | [Weavr CoP codes](https://docs.weavr.io/transactions/owt/cop/cop-codes/); [Lloyds copy](https://www.lloydsbank.com/help-guidance/everyday-banking/payments-and-transfers/name-checks.html); [Pay.UK](https://www.wearepay.uk/what-we-do/overlay-services/confirmation-of-payee/) |
+| APP scam reimbursement | 7 Oct 2024 | Victims refunded up to £85,000 within 5 business days (35 if paused); optional excess up to £100; customers expected to heed warnings. Make warnings specific and actionable. | [PSR](https://www.psr.org.uk/information-for-consumers/app-fraud-reimbursement-protections) |
+| FCA Consumer Duty, consumer understanding | 2023; good-practice review 13 Mar 2026 | Layered plain language, essentials first, ~100-word summary, risks as prominent as benefits, real-time scam warnings, short "positive friction" pauses, comprehension testing. Poor: cosmetic rewrites, small low-contrast warnings at the end of long mobile journeys. | [FCA](https://www.fca.org.uk/publications/good-and-poor-practice/consumer-understanding-good-practice-areas-improvement) |
+| FCA vulnerability guidance FG21/1 | Feb 2021 | Design for four drivers (health, life events, resilience, capability); multiple channels; encourage disclosure; "tell us once". FCA estimated 46–53% of UK adults show characteristics of vulnerability. | [Mishcon de Reya](https://www.mishcon.com/news/the-fcas-new-approach-to-vulnerable-customers-the-guidance) |
+| SCA (UK RTS) | In force | Exemptions: low value under £25 (until £85 cumulative or 5 transactions), TRA, merchant-initiated. Frame challenges in the flow. | [Stripe](https://docs.stripe.com/payments/3d-secure/strong-customer-authentication-exemptions) |
+| Financial Abuse Code v3 (UK Finance, voluntary) | Apr 2025 | Don't make victims retell their story; help regain control of accounts. Signatories cover ~90% of mortgage lending (Jan 2026). | [UK Finance](https://www.ukfinance.org.uk/news-and-insight/press-release/90-cent-mortgage-lending-now-covered-uk-finances-financial-abuse) |
+
+Context: UK APP fraud losses were £450.7m in 2024 (down 2%), investment scams up 34%, 70% of APP cases started online ([UK Finance Fraud Report 2025](https://www.ukfinance.org.uk/news-and-insight/press-release/fraud-report-2025-press-release)).
