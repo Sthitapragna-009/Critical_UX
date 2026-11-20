@@ -10,7 +10,7 @@
       "name": "critical-ux",
       "source": "./",
       "description": "Human-factors and fintech UX skills for interfaces where mistakes are expensive.",
-      "version": "0.1.0"
+      "version": "0.2.0"
     }
   ]
 }

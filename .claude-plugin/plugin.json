@@ -1,6 +1,6 @@
 {
   "name": "critical-ux",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "criticalUX: Claude skills for designing interfaces where mistakes are expensive. Fintech (B2B, B2C, B2B2C, D2C), automotive HMI, healthcare, civic and identity services, and control rooms. Sourced rules for money display, charts, payments, confirmations, alerts, emotion design, regulation by jurisdiction, and human factors.",
   "author": {
     "name": "KSP",
