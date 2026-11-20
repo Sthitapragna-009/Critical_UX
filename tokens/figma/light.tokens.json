@@ -1,0 +1,226 @@
+{
+  "$description": "criticalUX tokens, light mode. Generated from tokens/finance-semantic.json by scripts/build-tokens.mjs; do not edit by hand.",
+  "color": {
+    "surface": {
+      "page": {
+        "$type": "color",
+        "$value": "#F5F6F8"
+      },
+      "card": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "calm": {
+        "$type": "color",
+        "$value": "#F1F2F4"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "#14171C"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "#4F5663"
+      },
+      "on-accent": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      }
+    },
+    "border": {
+      "default": {
+        "$type": "color",
+        "$value": "#7C8390"
+      },
+      "subtle": {
+        "$type": "color",
+        "$value": "#D9DCE1"
+      }
+    },
+    "accent": {
+      "$type": "color",
+      "$value": "#2B50E0"
+    },
+    "value": {
+      "positive": {
+        "$type": "color",
+        "$value": "#0A7448"
+      },
+      "negative": {
+        "$type": "color",
+        "$value": "#C42B21"
+      },
+      "negative-accessible": {
+        "$type": "color",
+        "$value": "#B04F00"
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "#14171C"
+      }
+    },
+    "status": {
+      "pending": {
+        "$type": "color",
+        "$value": "#5B4BC4"
+      },
+      "success": {
+        "$type": "color",
+        "$value": "#0A7448"
+      },
+      "warning": {
+        "$type": "color",
+        "$value": "#8A5800"
+      },
+      "error": {
+        "$type": "color",
+        "$value": "#C42B21"
+      },
+      "info": {
+        "$type": "color",
+        "$value": "#1F5BC8"
+      }
+    },
+    "market": {
+      "green-up": {
+        "up": {
+          "$type": "color",
+          "$value": "#0A7448"
+        },
+        "down": {
+          "$type": "color",
+          "$value": "#C42B21"
+        }
+      },
+      "red-up": {
+        "up": {
+          "$type": "color",
+          "$value": "#C42B21"
+        },
+        "down": {
+          "$type": "color",
+          "$value": "#0A7448"
+        }
+      },
+      "colour-blind": {
+        "up": {
+          "$type": "color",
+          "$value": "#1F5BC8"
+        },
+        "down": {
+          "$type": "color",
+          "$value": "#B04F00"
+        }
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "ui": {
+        "$type": "fontFamily",
+        "$value": "Inter, 'IBM Plex Sans', 'Noto Sans', system-ui, sans-serif"
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": "'IBM Plex Mono', ui-monospace, monospace"
+      }
+    },
+    "size": {
+      "caption": {
+        "$type": "dimension",
+        "$value": "12px"
+      },
+      "body": {
+        "$type": "dimension",
+        "$value": "16px"
+      },
+      "label": {
+        "$type": "dimension",
+        "$value": "14px"
+      },
+      "title": {
+        "$type": "dimension",
+        "$value": "20px"
+      },
+      "amount": {
+        "$type": "dimension",
+        "$value": "32px"
+      },
+      "amount-hero": {
+        "$type": "dimension",
+        "$value": "44px"
+      }
+    }
+  },
+  "space": {
+    "1": {
+      "$type": "dimension",
+      "$value": "4px"
+    },
+    "2": {
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "3": {
+      "$type": "dimension",
+      "$value": "12px"
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "5": {
+      "$type": "dimension",
+      "$value": "24px"
+    },
+    "6": {
+      "$type": "dimension",
+      "$value": "32px"
+    },
+    "7": {
+      "$type": "dimension",
+      "$value": "48px"
+    }
+  },
+  "radius": {
+    "control": {
+      "$type": "dimension",
+      "$value": "10px"
+    },
+    "card": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "pill": {
+      "$type": "dimension",
+      "$value": "999px"
+    }
+  },
+  "motion": {
+    "duration": {
+      "fast": {
+        "$type": "duration",
+        "$value": "150ms"
+      },
+      "base": {
+        "$type": "duration",
+        "$value": "220ms"
+      },
+      "slow": {
+        "$type": "duration",
+        "$value": "320ms"
+      }
+    },
+    "ease": {
+      "$type": "cubicBezier",
+      "$value": [
+        0.2,
+        0,
+        0,
+        1
+      ]
+    }
+  }
+}

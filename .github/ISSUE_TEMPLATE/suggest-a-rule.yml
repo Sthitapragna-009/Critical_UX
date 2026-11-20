@@ -1,0 +1,54 @@
+name: Suggest a rule
+description: Add a rule, case study or market that criticalUX is missing.
+title: "[Rule] "
+labels: ["new rule"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! Every rule in criticalUX needs a source and a tag, so the more you can link, the faster it lands. You don't need to write the final wording; a rough note is fine.
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Which area?
+      options:
+        - critical-core (confirmations, alerts, emotion, accessibility, AI trust)
+        - money-data (numbers, charts, statuses, dashboards)
+        - money-flows (payments, KYC, disclosure, a country's rules)
+        - automotive-hmi (cars, two-wheelers, ADAS, EV)
+        - critical-domains (healthcare, civic, identity, control rooms)
+        - Tokens
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: rule
+    attributes:
+      label: The rule
+      description: What should a designer do or avoid, and in which situation?
+      placeholder: "Show the payee's verified name before the amount on the review screen, because…"
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: Link the regulation, standard, study or company publication. Say if it's paywalled or you're going from memory.
+    validations:
+      required: true
+  - type: dropdown
+    id: tag
+    attributes:
+      label: Evidence type
+      options:
+        - "[REG] Law, regulation or formal standard"
+        - "[STD] Platform or industry guideline"
+        - "[RES] Published research"
+        - "[PRAC] Documented company practice"
+        - "[INF] My own inference"
+        - Not sure
+  - type: input
+    id: market
+    attributes:
+      label: Market or date, if it applies
+      placeholder: "UK, applies from Oct 2024"

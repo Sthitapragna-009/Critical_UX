@@ -1,0 +1,44 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  tokens:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: WCAG contrast
+        run: node scripts/check-contrast.mjs
+      - name: Figma tokens and CSS match the JSON
+        run: node scripts/build-tokens.mjs --check
+
+  skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Every skill has a SKILL.md with name and description
+        run: |
+          status=0
+          for dir in skills/*/; do
+            f="${dir}SKILL.md"
+            if [ ! -f "$f" ]; then echo "Missing $f"; status=1; continue; fi
+            head -n 1 "$f" | grep -qx -- '---' || { echo "$f: no front matter"; status=1; }
+            grep -q '^name: ' "$f" || { echo "$f: no name"; status=1; }
+            grep -q '^description: ' "$f" || { echo "$f: no description"; status=1; }
+          done
+          exit $status
+      - name: Every referenced file exists
+        run: |
+          status=0
+          for dir in skills/*/; do
+            for ref in $(grep -oh 'references/[A-Za-z0-9_/-]*\.md' "${dir}SKILL.md" | sort -u); do
+              [ -f "${dir}${ref}" ] || { echo "${dir}SKILL.md points to missing ${ref}"; status=1; }
+            done
+          done
+          exit $status

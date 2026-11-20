@@ -9,7 +9,7 @@ Thanks for helping designers build interfaces that don't hurt people.
 3. **Date everything that can change.** Regulations get "applies from" dates and the market they apply to. Drafts and proposals are labelled as such.
 4. **Mark what you didn't verify.** If you're relying on memory or a paywalled standard you couldn't read, say "not verified". It's better than a confident wrong rule.
 5. **No brand assets.** No logos, proprietary fonts, brand palettes, screenshots of apps, or card-network marks. Name styles descriptively.
-6. **Accessibility is the floor.** Token changes must pass `node scripts/check-contrast.mjs`.
+6. **Accessibility is the floor.** Token changes must pass `node scripts/check-contrast.mjs`. Edit `tokens/finance-semantic.json` first, mirror it in `tokens/criticalux.css`, then run `node scripts/build-tokens.mjs` to regenerate the Figma files and check the CSS matches.
 
 ## Where things go
 

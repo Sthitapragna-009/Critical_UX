@@ -1,0 +1,57 @@
+# Packages each skill as a ready-to-upload zip and attaches them to a GitHub Release,
+# so designers can download a skill and upload it to Claude.ai without git or zipping.
+#
+# To publish: push a version tag (git tag v0.1.0 && git push origin v0.1.0),
+# or run this workflow by hand from the Actions tab and enter a tag.
+name: Release skill zips
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to create or update (e.g. v0.1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check tokens
+        run: |
+          node scripts/check-contrast.mjs
+          node scripts/build-tokens.mjs --check
+
+      - name: Build zips
+        run: |
+          mkdir -p dist stage
+          cp -r skills/* stage/
+          # critical-core points designers to the tokens, so ship them inside it.
+          cp -r tokens stage/critical-core/tokens
+          for dir in stage/*/; do
+            name=$(basename "$dir")
+            # One skill folder per zip, with SKILL.md directly inside it, as Claude.ai expects.
+            (cd stage && zip -rq "../dist/$name.zip" "$name")
+          done
+          ls -la dist
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.inputs.tag || github.ref_name }}
+        run: |
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/*.zip --clobber
+          else
+            gh release create "$TAG" dist/*.zip --title "criticalUX $TAG" --generate-notes
+          fi
