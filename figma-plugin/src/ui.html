@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>
+  /* Figma UI3 look. Colours come from Figma's theme variables (themeColors: true),
+     so the panel follows light and dark mode. Fallbacks are for previews outside Figma. */
+  :root {
+    --bg: var(--figma-color-bg, #ffffff);
+    --bg2: var(--figma-color-bg-secondary, #f5f5f5);
+    --bg-hover: var(--figma-color-bg-hover, #f5f5f5);
+    --text: var(--figma-color-text, #000000e5);
+    --text2: var(--figma-color-text-secondary, #00000080);
+    --text3: var(--figma-color-text-tertiary, #0000004d);
+    --border: var(--figma-color-border, #e6e6e6);
+    --brand: var(--figma-color-bg-brand, #0d99ff);
+    --brand-text: var(--figma-color-text-brand, #007be5);
+    --onbrand: var(--figma-color-text-onbrand, #ffffff);
+    --danger: var(--figma-color-text-danger, #dc3412);
+    --danger-bg: var(--figma-color-bg-danger-tertiary, #fff1ee);
+    --warning: var(--figma-color-text-warning, #b86200);
+    --success: var(--figma-color-text-success, #008846);
+    --info: var(--figma-color-icon-brand, #0d99ff);
+    --icon: var(--figma-color-icon, #000000e5);
+    --icon2: var(--figma-color-icon-secondary, #00000080);
+    --sev-high: #C10A28; --sev-medium: #C2410C; --sev-low: #2E7D32;
+    --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  }
+  .figma-dark { --sev-high: #FF5A6E; --sev-medium: #FF8A3D; --sev-low: #5FCB68; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body { font: 11px/16px Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: default; }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; border-radius: 5px; }
+  svg { display: block; }
+  [hidden] { display: none !important; }
+
+  /* tabs */
+  .tabs { display: flex; align-items: center; gap: 2px; height: 40px; padding: 0 8px; border-bottom: 1px solid var(--border); flex: 0 0 auto; }
+  .tabs button { height: 24px; padding: 0 8px; border-radius: 5px; font-weight: 500; color: var(--text2); }
+  .tabs button:hover { color: var(--text); }
+  .tabs button[aria-selected="true"] { background: var(--bg2); color: var(--text); font-weight: 600; }
+  .tabs .sel { margin-left: auto; padding-right: 4px; color: var(--text2); max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  main { flex: 1; overflow-y: auto; }
+  .sec { padding: 8px 0 12px; border-bottom: 1px solid var(--border); }
+  .sec-h { display: flex; align-items: center; height: 32px; padding: 0 12px 0 16px; font-weight: 600; }
+  .muted { color: var(--text2); }
+
+  /* buttons */
+  .btn { height: 24px; padding: 0 8px; border-radius: 5px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .btn.primary { background: var(--brand); color: var(--onbrand); }
+  .btn.primary:active { filter: brightness(.92); }
+  .btn.secondary { box-shadow: inset 0 0 0 1px var(--border); color: var(--text); background: var(--bg); }
+  .btn.secondary:hover { background: var(--bg-hover); }
+  .btn[disabled] { opacity: .4; }
+  .icon-btn { width: 24px; height: 24px; border-radius: 5px; display: inline-grid; place-items: center; color: var(--icon2); }
+  .icon-btn:hover { background: var(--bg-hover); color: var(--icon); }
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  /* footer */
+  .footer { display: flex; align-items: center; gap: 8px; padding: 8px 12px 8px 16px; border-top: 1px solid var(--border); flex: 0 0 auto; background: var(--bg); }
+  .footer .status { flex: 1; color: var(--text2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* verdict banner: solid band + tinted action band */
+  .verdict { position: relative; overflow: hidden; }
+  .vband { position: relative; display: flex; align-items: center; gap: 12px; min-height: 96px; padding: 14px 16px 16px 20px; color: #fff; }
+  .vband::after { content: ""; position: absolute; inset: 0 0 0 auto; width: 46%; pointer-events: none;
+    background: repeating-linear-gradient(135deg, rgba(255,255,255,.10) 0 6px, transparent 6px 14px);
+    -webkit-mask: linear-gradient(90deg, transparent, #000 60%); mask: linear-gradient(90deg, transparent, #000 60%); }
+  .vtext { flex: 1; min-width: 0; position: relative; z-index: 1; }
+  .vkick { font: 600 10px/14px var(--mono); letter-spacing: .06em; text-transform: uppercase; opacity: .8; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .vtitle { display: block; font-size: 30px; line-height: 36px; font-weight: 400; letter-spacing: -.02em; margin-top: 4px; white-space: nowrap; }
+  .vsub { margin-top: 2px; opacity: .9; }
+  .varrow { position: relative; z-index: 1; width: 52px; height: 52px; flex: 0 0 52px; }
+  .vact { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 16px 0 20px; }
+  .vact .vcount { display: flex; align-items: baseline; gap: 10px; font-variant-numeric: tabular-nums; }
+  .vact .vcount span { display: inline-flex; align-items: baseline; gap: 3px; }
+  .vact .vcount b { font-size: 18px; line-height: 20px; font-weight: 600; }
+  .vcta { margin-left: auto; font-size: 13px; line-height: 20px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; color: inherit; white-space: nowrap; }
+  .vcta:hover { text-decoration-thickness: 2.5px; }
+  .v-risk .vband { background: #C10A28; } .v-risk .vact { background: #FFE3E8; color: #8A0018; }
+  .v-fix .vband { background: #C2410C; }  .v-fix .vact { background: #FFEAD9; color: #7A2A06; }
+  .v-low .vband { background: #2E7D32; }  .v-low .vact { background: #E4F4E1; color: #1E5A22; }
+  .v-safe .vband { background: #0A6B3D; } .v-safe .vact { background: #D9F2E4; color: #08502D; }
+  .figma-dark .v-risk .vact { background: #4A0A16; color: #FFC9D2; }
+  .figma-dark .v-fix .vact { background: #4A1E08; color: #FFD3B3; }
+  .figma-dark .v-low .vact { background: #16341A; color: #C4EBC0; }
+  .figma-dark .v-safe .vact { background: #0C3A22; color: #B8EFCD; }
+
+  /* severity filter */
+  .varrow svg { width: 100%; height: 100%; }
+  .meter { display: flex; gap: 3px; height: 6px; margin: 14px 16px 0; }
+  .meter i { display: block; height: 100%; border-radius: 3px; min-width: 6px; }
+  .m-high { background: var(--sev-high); } .m-medium { background: var(--sev-medium); } .m-low { background: var(--sev-low); }
+  .seg { display: flex; margin: 10px 16px 0; padding: 2px; gap: 2px; border-radius: 6px; background: var(--bg2); }
+  .seg button { flex: 1; height: 24px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; color: var(--text2); font-weight: 500; white-space: nowrap; }
+  .seg button b { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; }
+  .seg button[aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: 0 0 0 1px var(--border), 0 1px 2px rgba(0,0,0,.06); }
+  .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; flex: 0 0 6px; }
+  .d-high { background: var(--sev-high); } .d-medium { background: var(--sev-medium); } .d-low { background: var(--sev-low); }
+
+  .tools { display: flex; align-items: center; gap: 8px; padding: 12px 16px 0; }
+  .check { display: inline-flex; align-items: center; gap: 6px; color: var(--text2); margin-left: auto; }
+  .check input { width: 12px; height: 12px; accent-color: var(--brand); }
+
+  /* finding rows */
+  .rows { padding: 4px 0 8px; }
+  .row { display: grid; grid-template-columns: 26px 1fr 24px; column-gap: 8px; padding: 8px 8px 8px 16px; }
+  .row:hover { background: var(--bg-hover); }
+  .row > div { min-width: 0; }
+  .row .n { font: 500 10px/16px var(--mono); color: var(--text3); display: flex; align-items: center; gap: 5px; height: 16px; }
+  .row h4 { font-weight: 500; font-size: 11px; line-height: 16px; }
+  .row p { color: var(--text2); margin-top: 2px; }
+  .row .meta { display: flex; align-items: center; gap: 6px; color: var(--text3); margin-top: 4px; min-width: 0; }
+  .rule-link { color: var(--brand-text); font-weight: 500; white-space: nowrap; font-family: var(--mono); font-size: 10px; }
+  .rule-link:hover { text-decoration: underline; }
+  .rtitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+  .src-ai { color: var(--text); font-weight: 600; }
+
+  .empty { padding: 40px 24px; text-align: center; color: var(--text2); }
+  .empty svg { width: 24px; height: 32px; margin: 0 auto 12px; }
+  .empty h3 { color: var(--text); font-size: 13px; line-height: 20px; font-weight: 600; margin-bottom: 4px; }
+  .ai-summary { margin: 12px 16px 0; padding: 8px 10px; border-radius: 5px; background: var(--bg2); }
+  .err { margin: 8px 16px; padding: 8px 10px; border-radius: 5px; background: var(--danger-bg); color: var(--danger); }
+  .spin { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid currentColor; border-right-color: transparent; animation: s .7s linear infinite; }
+  @keyframes s { to { transform: rotate(360deg); } }
+
+  /* patterns */
+  .group { display: flex; align-items: center; height: 32px; padding: 8px 16px 0; font-weight: 600; }
+  .prow { display: flex; align-items: flex-start; gap: 12px; padding: 8px 12px 8px 16px; }
+  .prow:hover { background: var(--bg-hover); }
+  .prow .t { flex: 1; min-width: 0; }
+  .prow h4 { font-weight: 500; font-size: 11px; }
+  .prow p { color: var(--text2); margin-top: 2px; }
+  .prow .rl { color: var(--text3); font-family: var(--mono); font-size: 10px; margin-top: 4px; }
+
+  /* rules */
+  .search { margin: 8px 12px 0 16px; position: relative; }
+  .search svg { position: absolute; left: 8px; top: 6px; width: 16px; height: 16px; color: var(--icon2); }
+  .search input { width: 100%; height: 28px; border: 1px solid transparent; border-radius: 5px; background: var(--bg2); padding: 0 8px 0 30px; font: inherit; color: var(--text); }
+  .search input:hover { border-color: var(--border); }
+  .search input:focus { outline: none; border-color: var(--brand); background: var(--bg); }
+  .rseg { margin: 8px 12px 4px 16px; }
+  .rule { padding: 8px 12px 8px 16px; }
+  .rule:hover { background: var(--bg-hover); }
+  .rule .top { display: flex; align-items: center; gap: 8px; color: var(--text3); font: 500 10px/16px var(--mono); }
+  .rule .top a { margin-left: auto; font: 500 11px/16px Inter, sans-serif; color: var(--brand-text); text-decoration: none; }
+  .rule .top a:hover { text-decoration: underline; }
+  .rule h4 { font-weight: 500; font-size: 11px; margin-top: 2px; }
+  .rule p { color: var(--text2); margin-top: 2px; }
+  .rule.flash { background: var(--bg2); box-shadow: inset 2px 0 0 var(--brand); }
+
+  /* settings */
+  .field { padding: 6px 12px 6px 16px; }
+  .field label { display: block; color: var(--text2); margin-bottom: 4px; }
+  .field input, .field select { width: 100%; height: 28px; border: 1px solid var(--border); border-radius: 5px; background: var(--bg); padding: 0 8px; font: inherit; color: var(--text); }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--brand); }
+  .help { color: var(--text2); padding: 0 12px 0 16px; }
+  a.text-link { color: var(--brand-text); text-decoration: none; }
+  a.text-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <nav class="tabs" role="tablist">
+    <button role="tab" aria-selected="true" data-tab="audit">Audit</button>
+    <button role="tab" aria-selected="false" data-tab="patterns">Patterns</button>
+    <button role="tab" aria-selected="false" data-tab="rules">Rules</button>
+    <button role="tab" aria-selected="false" data-tab="settings" id="tab-settings-btn">Settings</button>
+  </nav>
+
+  <main>
+    <section id="tab-audit">
+      <div id="audit-empty" class="empty">
+        <svg viewBox="272 198 480 648" aria-hidden="true"><defs><linearGradient id="g" x1="380" y1="210" x2="640" y2="840" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#C6F24A"/><stop offset="1" stop-color="#2F7A12"/></linearGradient><mask id="m" maskUnits="userSpaceOnUse" x="0" y="0" width="1024" height="1024"><path d="M512 226 C596 274 668 292 724 292 L724 512 C724 652 634 758 512 818 C390 758 300 652 300 512 L300 292 C356 292 428 274 512 226 Z" fill="#fff" stroke="#fff" stroke-width="40" stroke-linejoin="round"/><g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round"><circle cx="490" cy="480" r="118" stroke-width="48"/><path d="M576 566 L640 630" stroke-width="54"/><path d="M440 484 L476 520 L544 450" stroke-width="40"/></g></mask></defs><rect width="1024" height="1024" fill="url(#g)" mask="url(#m)"/></svg>
+        <h3>Check a screen before it ships</h3>
+        <p>Select one or more frames and run the audit. criticalUX checks confirmations, amounts, fees, consent, failure states, dose notation, contrast and touch targets against <span class="rcount"></span> sourced rules.</p>
+      </div>
+      <div id="audit-out" hidden>
+        <div class="sec" style="padding-top:0">
+          <div class="verdict" id="verdict">
+            <div class="vband">
+              <div class="vtext"><div class="vkick" id="scope"></div><strong class="vtitle" id="vtitle"></strong><div class="vsub" id="vsub"></div></div>
+              <span class="varrow" id="vmark" aria-hidden="true"></span>
+            </div>
+            <div class="vact"><div class="vcount" id="vcount"></div><button class="vcta" id="vcta"></button></div>
+          </div>
+          <div class="meter" id="meter" aria-hidden="true"></div>
+          <div class="seg" id="seg" role="group" aria-label="Filter by severity"></div>
+          <div class="tools">
+            <button class="btn secondary" id="annotate">Add markers</button>
+            <button class="btn secondary" id="clear">Clear</button>
+            <label class="check"><input type="checkbox" id="native" checked /> Dev Mode annotations</label>
+          </div>
+          <div id="ai-summary" class="ai-summary" hidden></div>
+        </div>
+        <div class="rows" id="list"></div>
+      </div>
+      <div id="audit-err" class="err" hidden></div>
+    </section>
+
+    <section id="tab-patterns" hidden><div id="patterns"></div></section>
+
+    <section id="tab-rules" hidden>
+      <div class="search">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-linecap="round"/></svg>
+        <input id="q" placeholder="Search rules" aria-label="Search rules" />
+      </div>
+      <div class="seg rseg" id="filters" role="group" aria-label="Filter by skill"></div>
+      <div id="rules"></div>
+    </section>
+
+    <section id="tab-settings" hidden>
+      <div class="sec">
+        <div class="sec-h">Deep review with Claude</div>
+        <p class="help">Optional. Sends a screenshot and the layer text of the first selected frame to Anthropic with your own API key, and Claude reviews it against every rule. Built-in checks never leave Figma.</p>
+        <div class="field"><label for="key">Anthropic API key</label><input id="key" type="password" placeholder="sk-ant-…" autocomplete="off" /></div>
+        <p class="help">Stored only on this device, in Figma's plugin storage.</p>
+        <div class="field"><label for="model">Model</label><input id="model" value="claude-sonnet-5-5" /></div>
+        <div class="field"><label for="market">Market</label>
+          <select id="market">
+            <option value="Global">Global (strictest researched rule)</option>
+            <option value="India">India</option><option value="UK">UK</option><option value="EU">EU</option><option value="US">US</option>
+            <option value="Brazil">Brazil</option><option value="Singapore and Southeast Asia">Singapore and Southeast Asia</option><option value="Australia">Australia</option>
+          </select>
+        </div>
+        <div class="field"><button class="btn primary" id="save">Save</button> <span class="muted" id="saved"></span></div>
+      </div>
+      <p class="help" style="padding-top:12px">criticalUX is design guidance, not legal, medical or engineering certification advice. <a class="text-link" href="https://github.com/Sthitapragna-009/Critical_UX" target="_blank" rel="noopener">View on GitHub</a></p>
+    </section>
+  </main>
+
+  <div class="footer" id="bar">
+    <span class="status" id="status">Select a frame to audit</span>
+    <button class="btn secondary" id="deep">Deep review</button>
+    <button class="btn primary" id="run">Audit selection</button>
+  </div>
+
+<script>
+/*__RULES__*/
+var CUX_DEEP = /*__DEEP__*/true;
+
+var $ = function (s) { return document.querySelector(s); };
+var state = { findings: [], ai: [], filter: "all", settings: {}, ruleFilter: "all", count: 0, scope: "" };
+var ICON_SEL = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6V3h3M10 3h3v3M13 10v3h-3M6 13H3v-3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/></svg>';
+var V_ICON = {
+  risk: '<svg viewBox="0 0 52 52"><path d="M42 10L12 40M12 18v22h22" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  safe: '<svg viewBox="0 0 52 52"><path d="M10 27l11 11 21-24" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+V_ICON.fix = V_ICON.risk; V_ICON.low = V_ICON.risk;
+var SEV = { high: 0, medium: 1, low: 2 };
+function send(m) { parent.postMessage({ pluginMessage: m }, "*"); }
+function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+function setStatus(t) { $("#status").textContent = t; }
+
+if (!CUX_DEEP) { $("#deep").hidden = true; $("#tab-settings-btn").hidden = true; }
+
+// ---------------- tabs
+document.querySelectorAll(".tabs [data-tab]").forEach(function (b) { b.addEventListener("click", function () { showTab(b.dataset.tab); }); });
+function showTab(t) {
+  document.querySelectorAll(".tabs [data-tab]").forEach(function (b) { b.setAttribute("aria-selected", b.dataset.tab === t ? "true" : "false"); });
+  ["audit", "patterns", "rules", "settings"].forEach(function (k) { $("#tab-" + k).hidden = k !== t; });
+  $("#bar").hidden = t !== "audit";
+}
+
+// ---------------- audit
+$("#run").addEventListener("click", function () { $("#run").innerHTML = '<span class="spin"></span> Checking'; state.ai = []; send({ type: "audit" }); });
+$("#annotate").addEventListener("click", function () { send({ type: "annotate", findings: ordered().filter(function (f) { return f.nodeId; }), native: $("#native").checked }); });
+$("#clear").addEventListener("click", function () { send({ type: "clear-markers" }); });
+function ordered() { return state.findings.concat(state.ai).sort(function (a, b) { return SEV[a.severity] - SEV[b.severity]; }); }
+
+function renderAudit() {
+  var all = ordered();
+  $("#audit-empty").hidden = true; $("#audit-out").hidden = false; $("#audit-err").hidden = true;
+  var c = { high: 0, medium: 0, low: 0 };
+  all.forEach(function (f) { c[f.severity]++; });
+  var kind = c.high ? "risk" : c.medium ? "fix" : c.low ? "low" : "safe";
+  $("#verdict").className = "verdict v-" + kind;
+  $("#vmark").innerHTML = V_ICON[kind];
+  $("#vtitle").textContent = { risk: "High risk!", fix: "Medium risk", low: "Low risk", safe: "Safe to ship" }[kind];
+  $("#scope").textContent = state.scope;
+  var pl = function (n) { return n + " issue" + (n > 1 ? "s" : ""); };
+  $("#vsub").textContent = { risk: pl(c.high) + " can cost users money or harm", fix: pl(c.medium) + " to fix before handoff", low: pl(c.low) + " to polish, nothing blocking", safe: "No issues found by the built-in checks" }[kind];
+  $("#vcount").innerHTML = [["high", "high"], ["medium", "med"], ["low", "low"]].map(function (s) { return "<span><b>" + c[s[0]] + "</b>" + s[1] + "</span>"; }).join("");
+  $("#vcta").textContent = kind === "safe" ? "Browse safe patterns" : "Make the changes";
+  $("#vcta").onclick = function () {
+    if (kind === "safe") { showTab("patterns"); return; }
+    state.filter = { risk: "high", fix: "medium", low: "low" }[kind]; renderAudit();
+    $("#list").scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  $("#meter").innerHTML = ["high", "medium", "low"].filter(function (k) { return c[k]; }).map(function (k) { return '<i class="m-' + k + '" style="flex:' + c[k] + '"></i>'; }).join("");
+  $("#meter").hidden = !all.length;
+  var segs = [["all", "All", all.length], ["high", "High", c.high], ["medium", "Medium", c.medium], ["low", "Low", c.low]];
+  $("#seg").innerHTML = segs.map(function (s) {
+    return '<button data-sev="' + s[0] + '" aria-pressed="' + (state.filter === s[0]) + '">' + (s[0] === "all" ? "" : '<i class="dot d-' + s[0] + '"></i>') + s[1] + " <b>" + s[2] + "</b></button>";
+  }).join("");
+  document.querySelectorAll("#seg button").forEach(function (b) { b.addEventListener("click", function () { state.filter = b.dataset.sev; renderAudit(); }); });
+  if (!all.length) {
+    $("#list").innerHTML = '<div class="empty"><h3>No issues found</h3><p>The built-in checks found nothing on this selection.' + (CUX_DEEP ? " Run a deep review for copy, flow and state issues that layer checks can't see." : "") + "</p></div>";
+    setStatus("No issues found"); return;
+  }
+  var shown = all.filter(function (f) { return state.filter === "all" || f.severity === state.filter; });
+  $("#list").innerHTML = shown.map(function (f, i) {
+    var r = CUX_RULES_BY_ID[f.ruleId];
+    return '<div class="row"><span class="n"><i class="dot d-' + f.severity + '"></i>' + String(i + 1).padStart(2, "0") + "</span>" +
+      "<div><h4>" + esc(f.problem) + "</h4><p>" + esc(f.fix) + '</p><div class="meta">' +
+      (f.source === "claude" ? '<span class="src-ai">Claude</span>' : "") +
+      '<button class="rule-link" data-rule="' + esc(f.ruleId) + '">' + esc(f.ruleId) + "</button>" +
+      (r ? '<span class="rtitle">' + esc(r.title) + "</span>" : "") + "</div></div>" +
+      (f.nodeId ? '<button class="icon-btn" data-node="' + esc(f.nodeId) + '" title="Select layer" aria-label="Select layer">' + ICON_SEL + "</button>" : "<span></span>") + "</div>";
+  }).join("");
+  document.querySelectorAll("[data-node]").forEach(function (b) { b.addEventListener("click", function () { send({ type: "select", nodeId: b.dataset.node }); }); });
+  document.querySelectorAll("[data-rule]").forEach(function (b) { b.addEventListener("click", function () { openRule(b.dataset.rule); }); });
+  setStatus(all.length + " issue" + (all.length > 1 ? "s" : "") + " on " + state.scope);
+}
+
+// ---------------- deep review
+$("#deep").addEventListener("click", function () {
+  if (!state.settings.key) { showTab("settings"); $("#key").focus(); return; }
+  $("#deep").innerHTML = '<span class="spin"></span> Reviewing'; $("#deep").disabled = true;
+  send({ type: "capture" });
+});
+function flatten(snap) {
+  var out = [];
+  (function w(n, depth) {
+    if (out.length > 350 || n.visible === false) return;
+    var e = { id: n.id, name: n.name, type: n.type };
+    if (n.text) e.text = n.text.slice(0, 160);
+    if (n.type !== "TEXT") { e.w = Math.round(n.w); e.h = Math.round(n.h); }
+    if (n.props && Object.keys(n.props).length) e.props = n.props;
+    if (n.type === "TEXT" || depth < 6 || n.props) out.push(e);
+    (n.children || []).forEach(function (c) { w(c, depth + 1); });
+  })(snap, 0);
+  return out;
+}
+function deepReview(cap) {
+  var rules = CUX_RULES.map(function (r) { return r.id + " [" + r.src + "] " + r.title + ": " + r.body; }).join("\n");
+  var layers = flatten(cap.snapshot);
+  var known = {}; layers.forEach(function (l) { known[l.id] = l; });
+  var system = "You are criticalUX, a reviewer for interfaces where mistakes cost money, health, safety or rights. " +
+    "Review the screen against these rules only and cite one rule id per finding:\n" + rules +
+    "\n\nMarket: " + (state.settings.market || "Global") + ". Apply that market's regulations where relevant; if a rule is an inference [INF], say so in the fix." +
+    "\nFocus on what layer checks miss: unclear copy, missing states (loading, pending, failed, unknown, empty), missing consequence or reversibility, hidden fees, unsafe defaults, weak hierarchy of safe vs risky actions, identity of the subject, mode visibility, accessibility." +
+    "\nReturn ONLY JSON: {\"summary\": \"one or two plain sentences\", \"findings\": [{\"ruleId\": \"flows-3\", \"severity\": \"high|medium|low\", \"nodeId\": \"id from the layer list or null\", \"problem\": \"what is wrong, one sentence\", \"fix\": \"specific fix with example copy\"}]}. At most 12 findings, most severe first. Do not repeat issues already listed as built-in findings.";
+  var already = state.findings.map(function (f) { return f.ruleId + " on " + f.layer + ": " + f.problem; }).join("\n");
+  return fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: { "content-type": "application/json", "x-api-key": state.settings.key, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
+    body: JSON.stringify({ model: state.settings.model || "claude-sonnet-5-5", max_tokens: 3000, system: system, messages: [{ role: "user", content: [
+      { type: "image", source: { type: "base64", media_type: "image/png", data: cap.png } },
+      { type: "text", text: "Screen: " + cap.name + "\n\nLayers (id, name, type, text):\n" + JSON.stringify(layers) + "\n\nBuilt-in findings already shown:\n" + (already || "none") }
+    ] }] })
+  }).then(function (r) {
+    return r.json().then(function (j) {
+      if (!r.ok) throw new Error((j && j.error && j.error.message) || ("HTTP " + r.status));
+      var text = (j.content || []).filter(function (b) { return b.type === "text"; }).map(function (b) { return b.text; }).join("");
+      var m = text.match(/\{[\s\S]*\}/);
+      if (!m) throw new Error("Claude didn't return a review. Try again.");
+      var out = JSON.parse(m[0]);
+      state.ai = (out.findings || []).slice(0, 12).map(function (f, i) {
+        var node = f.nodeId && known[f.nodeId] ? known[f.nodeId] : null;
+        return { key: "ai" + i, source: "claude", ruleId: CUX_RULES_BY_ID[f.ruleId] ? f.ruleId : "core-1", severity: /^(high|medium|low)$/.test(f.severity) ? f.severity : "medium", nodeId: node ? node.id : null, layer: node ? node.name : "", problem: f.problem || "", fix: f.fix || "" };
+      });
+      $("#ai-summary").hidden = !out.summary;
+      $("#ai-summary").innerHTML = '<span class="src-ai">Claude</span> · ' + esc(out.summary || "");
+    });
+  });
+}
+
+// ---------------- patterns
+var PATTERNS = [
+  { group: "Money", id: "confirm", name: "Payment confirmation", desc: "Amount first, verified payee, fee, arrival and reversibility; the button names the action.", rules: "core-4 · flows-3" },
+  { group: "Money", id: "fees", name: "Fee and FX quote", desc: "You send, fee, mid-market rate, they receive, estimated arrival.", rules: "flows-1 · data-12" },
+  { group: "Money", id: "scam", name: "Collect request warning", desc: "Says what the PIN does; Decline is the main action.", rules: "core-5 · flows-5" },
+  { group: "Money", id: "failed", name: "Payment failed", desc: "Where the money is and what to do next. No error codes, no fraud wording.", rules: "core-10 · flows-6" },
+  { group: "Money", id: "unknown", name: "Unknown result", desc: "Checking whether the payment went through. Don't pay again yet.", rules: "flows-7 · data-13" },
+  { group: "Money", id: "consent", name: "Consent, off by default", desc: "Separate, specific, unticked choices, add-ons included.", rules: "flows-8 · flows-dark" },
+  { group: "Money", id: "status", name: "Status chips", desc: "Pending, Paid, Failed, Refunded, Returned: icon, word and colour.", rules: "data-chip" },
+  { group: "Health, civic and operations", id: "patient", name: "Patient banner and dose", desc: "Identity on screen, allergy flagged, dose in ISMP notation.", rules: "dom-3 · dom-5" },
+  { group: "Health, civic and operations", id: "question", name: "One question per page", desc: "GOV.UK-style question with back link, hint and (optional).", rules: "dom-9" },
+  { group: "Health, civic and operations", id: "alarms", name: "Alarm tiers", desc: "Critical, warning, advisory; only the top tier interrupts.", rules: "core-7 · dom-8" }
+];
+(function () {
+  var html = "", g = "";
+  PATTERNS.forEach(function (p) {
+    if (p.group !== g) { g = p.group; html += '<div class="group">' + esc(g) + "</div>"; }
+    html += '<div class="prow"><div class="t"><h4>' + esc(p.name) + "</h4><p>" + esc(p.desc) + '</p><div class="rl">' + esc(p.rules) + '</div></div><button class="btn secondary" data-insert="' + p.id + '">Insert</button></div>';
+  });
+  $("#patterns").innerHTML = html;
+  document.querySelectorAll("[data-insert]").forEach(function (b) { b.addEventListener("click", function () { send({ type: "insert", id: b.dataset.insert }); }); });
+})();
+
+// ---------------- rules
+(function () {
+  var opts = [["all", "All"]].concat(Object.keys(CUX_SKILLS).map(function (k) { return [k, CUX_SKILLS[k].label]; }));
+  $("#filters").innerHTML = opts.map(function (o) { return '<button data-skill="' + o[0] + '" aria-pressed="' + (o[0] === "all") + '">' + o[1] + "</button>"; }).join("");
+  document.querySelectorAll("[data-skill]").forEach(function (b) {
+    b.addEventListener("click", function () { state.ruleFilter = b.dataset.skill; document.querySelectorAll("[data-skill]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); }); renderRules(); });
+  });
+})();
+function renderRules(flashId) {
+  var q = $("#q").value.trim().toLowerCase();
+  var list = CUX_RULES.filter(function (r) { return (state.ruleFilter === "all" || r.skill === state.ruleFilter) && (!q || (r.id + " " + r.title + " " + r.body).toLowerCase().indexOf(q) >= 0); });
+  $("#rules").innerHTML = list.length ? list.map(function (r) {
+    var s = CUX_SKILLS[r.skill];
+    return '<div class="rule' + (r.id === flashId ? " flash" : "") + '" id="rule-' + r.id + '"><div class="top"><span>' + r.id + "</span><span>" + r.src + '</span><a href="' + s.url + '" target="_blank" rel="noopener">' + s.name + "</a></div><h4>" + esc(r.title) + "</h4><p>" + esc(r.body) + "</p></div>";
+  }).join("") : '<div class="empty"><p>No rules match.</p></div>';
+}
+$("#q").addEventListener("input", function () { renderRules(); });
+function openRule(id) {
+  showTab("rules"); $("#q").value = ""; state.ruleFilter = "all";
+  document.querySelectorAll("[data-skill]").forEach(function (x) { x.setAttribute("aria-pressed", x.dataset.skill === "all" ? "true" : "false"); });
+  renderRules(id);
+  var el = document.getElementById("rule-" + id); if (el) el.scrollIntoView({ block: "center" });
+}
+renderRules();
+document.querySelectorAll(".rcount").forEach(function (e) { e.textContent = CUX_RULES.length; });
+
+// ---------------- settings
+$("#save").addEventListener("click", function () {
+  state.settings = { key: $("#key").value.trim(), model: $("#model").value.trim() || "claude-sonnet-5-5", market: $("#market").value };
+  send({ type: "save-settings", settings: state.settings });
+  $("#saved").textContent = "Saved"; setTimeout(function () { $("#saved").textContent = ""; }, 1800);
+});
+
+// ---------------- messages from Figma
+function setSel(count, names) {
+  state.count = count;
+  state.selName = count ? (count === 1 ? names[0] : count + " layers selected") : "";
+  $("#run").disabled = !count;
+  if (!state.findings.length && !state.ai.length) setStatus(count ? state.selName : "Select a frame to audit");
+}
+window.onmessage = function (e) {
+  var m = e.data.pluginMessage; if (!m) return;
+  if (m.type === "init") {
+    state.settings = m.settings || {};
+    $("#key").value = state.settings.key || ""; $("#model").value = state.settings.model || "claude-sonnet-5-5"; $("#market").value = state.settings.market || "Global";
+    setSel(m.count, m.names);
+  }
+  if (m.type === "selection") setSel(m.count, m.names);
+  if (m.type === "audit-result") {
+    $("#run").textContent = "Audit selection";
+    if (m.error) { $("#audit-err").hidden = false; $("#audit-err").textContent = m.error; return; }
+    state.findings = m.findings; state.filter = "all"; $("#ai-summary").hidden = true;
+    state.scope = (m.screens.length === 1 ? m.screens[0] : m.screens.length + " frames") + (m.truncated ? " (partly scanned)" : "");
+    renderAudit();
+  }
+  if (m.type === "annotated") setStatus(m.count ? m.count + " markers added" : "Nothing to mark");
+  if (m.type === "capture-result") {
+    var done = function () { $("#deep").textContent = "Deep review"; $("#deep").disabled = false; };
+    if (m.error) { done(); $("#audit-err").hidden = false; $("#audit-err").textContent = m.error; return; }
+    deepReview(m).then(function () { done(); renderAudit(); }).catch(function (err) { done(); $("#audit-err").hidden = false; $("#audit-err").textContent = "Deep review failed: " + err.message; });
+  }
+};
+send({ type: "init" });
+</script>
+</body>
+</html>
