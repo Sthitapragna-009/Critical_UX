@@ -23,8 +23,10 @@
     --info: var(--figma-color-icon-brand, #0d99ff);
     --icon: var(--figma-color-icon, #000000e5);
     --icon2: var(--figma-color-icon-secondary, #00000080);
+    --sev-high: #C10A28; --sev-medium: #C2410C; --sev-low: #2E7D32;
     --mono: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
   }
+  .figma-dark { --sev-high: #FF5A6E; --sev-medium: #FF8A3D; --sev-low: #5FCB68; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body { font: 11px/16px Inter, system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text); background: var(--bg); display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
@@ -78,21 +80,25 @@
   .vcta { margin-left: auto; font-size: 13px; line-height: 20px; font-weight: 500; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; color: inherit; white-space: nowrap; }
   .vcta:hover { text-decoration-thickness: 2.5px; }
   .v-risk .vband { background: #C10A28; } .v-risk .vact { background: #FFE3E8; color: #8A0018; }
-  .v-fix .vband { background: #A85000; }  .v-fix .vact { background: #FFEBD6; color: #6E3300; }
-  .v-safe .vband { background: #0B7A3E; } .v-safe .vact { background: #DCF5E6; color: #0A5229; }
+  .v-fix .vband { background: #C2410C; }  .v-fix .vact { background: #FFEAD9; color: #7A2A06; }
+  .v-low .vband { background: #2E7D32; }  .v-low .vact { background: #E4F4E1; color: #1E5A22; }
+  .v-safe .vband { background: #0A6B3D; } .v-safe .vact { background: #D9F2E4; color: #08502D; }
   .figma-dark .v-risk .vact { background: #4A0A16; color: #FFC9D2; }
-  .figma-dark .v-fix .vact { background: #42230A; color: #FFD9B0; }
+  .figma-dark .v-fix .vact { background: #4A1E08; color: #FFD3B3; }
+  .figma-dark .v-low .vact { background: #16341A; color: #C4EBC0; }
   .figma-dark .v-safe .vact { background: #0C3A22; color: #B8EFCD; }
 
   /* severity filter */
   .varrow svg { width: 100%; height: 100%; }
-  .m-high { background: var(--danger); } .m-medium { background: var(--warning); } .m-low { background: var(--info); }
-  .seg { display: flex; margin: 12px 16px 0; padding: 2px; gap: 2px; border-radius: 6px; background: var(--bg2); }
+  .meter { display: flex; gap: 3px; height: 6px; margin: 14px 16px 0; }
+  .meter i { display: block; height: 100%; border-radius: 3px; min-width: 6px; }
+  .m-high { background: var(--sev-high); } .m-medium { background: var(--sev-medium); } .m-low { background: var(--sev-low); }
+  .seg { display: flex; margin: 10px 16px 0; padding: 2px; gap: 2px; border-radius: 6px; background: var(--bg2); }
   .seg button { flex: 1; height: 24px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; color: var(--text2); font-weight: 500; white-space: nowrap; }
   .seg button b { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; }
   .seg button[aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: 0 0 0 1px var(--border), 0 1px 2px rgba(0,0,0,.06); }
   .dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; flex: 0 0 6px; }
-  .d-high { background: var(--danger); } .d-medium { background: var(--warning); } .d-low { background: var(--info); }
+  .d-high { background: var(--sev-high); } .d-medium { background: var(--sev-medium); } .d-low { background: var(--sev-low); }
 
   .tools { display: flex; align-items: center; gap: 8px; padding: 12px 16px 0; }
   .check { display: inline-flex; align-items: center; gap: 6px; color: var(--text2); margin-left: auto; }
@@ -179,6 +185,7 @@
             </div>
             <div class="vact"><div class="vcount" id="vcount"></div><button class="vcta" id="vcta"></button></div>
           </div>
+          <div class="meter" id="meter" aria-hidden="true"></div>
           <div class="seg" id="seg" role="group" aria-label="Filter by severity"></div>
           <div class="tools">
             <button class="btn secondary" id="annotate">Add markers</button>
@@ -240,7 +247,7 @@ var V_ICON = {
   risk: '<svg viewBox="0 0 52 52"><path d="M42 10L12 40M12 18v22h22" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   safe: '<svg viewBox="0 0 52 52"><path d="M10 27l11 11 21-24" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
 };
-V_ICON.fix = V_ICON.risk;
+V_ICON.fix = V_ICON.risk; V_ICON.low = V_ICON.risk;
 var SEV = { high: 0, medium: 1, low: 2 };
 function send(m) { parent.postMessage({ pluginMessage: m }, "*"); }
 function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
@@ -267,19 +274,22 @@ function renderAudit() {
   $("#audit-empty").hidden = true; $("#audit-out").hidden = false; $("#audit-err").hidden = true;
   var c = { high: 0, medium: 0, low: 0 };
   all.forEach(function (f) { c[f.severity]++; });
-  var kind = c.high ? "risk" : c.medium ? "fix" : "safe";
+  var kind = c.high ? "risk" : c.medium ? "fix" : c.low ? "low" : "safe";
   $("#verdict").className = "verdict v-" + kind;
   $("#vmark").innerHTML = V_ICON[kind];
-  $("#vtitle").textContent = { risk: "High risk!", fix: "Needs fixes", safe: "Safe to ship" }[kind];
+  $("#vtitle").textContent = { risk: "High risk!", fix: "Medium risk", low: "Low risk", safe: "Safe to ship" }[kind];
   $("#scope").textContent = state.scope;
-  $("#vsub").textContent = kind === "risk" ? c.high + " issue" + (c.high > 1 ? "s" : "") + " can cost users money or harm" : kind === "fix" ? c.medium + " issue" + (c.medium > 1 ? "s" : "") + " to fix before handoff" : "No high or medium issues found";
+  var pl = function (n) { return n + " issue" + (n > 1 ? "s" : ""); };
+  $("#vsub").textContent = { risk: pl(c.high) + " can cost users money or harm", fix: pl(c.medium) + " to fix before handoff", low: pl(c.low) + " to polish, nothing blocking", safe: "No issues found by the built-in checks" }[kind];
   $("#vcount").innerHTML = [["high", "high"], ["medium", "med"], ["low", "low"]].map(function (s) { return "<span><b>" + c[s[0]] + "</b>" + s[1] + "</span>"; }).join("");
   $("#vcta").textContent = kind === "safe" ? "Browse safe patterns" : "Make the changes";
   $("#vcta").onclick = function () {
     if (kind === "safe") { showTab("patterns"); return; }
-    state.filter = kind === "risk" ? "high" : "medium"; renderAudit();
+    state.filter = { risk: "high", fix: "medium", low: "low" }[kind]; renderAudit();
     $("#list").scrollIntoView({ behavior: "smooth", block: "start" });
   };
+  $("#meter").innerHTML = ["high", "medium", "low"].filter(function (k) { return c[k]; }).map(function (k) { return '<i class="m-' + k + '" style="flex:' + c[k] + '"></i>'; }).join("");
+  $("#meter").hidden = !all.length;
   var segs = [["all", "All", all.length], ["high", "High", c.high], ["medium", "Medium", c.medium], ["low", "Low", c.low]];
   $("#seg").innerHTML = segs.map(function (s) {
     return '<button data-sev="' + s[0] + '" aria-pressed="' + (state.filter === s[0]) + '">' + (s[0] === "all" ? "" : '<i class="dot d-' + s[0] + '"></i>') + s[1] + " <b>" + s[2] + "</b></button>";
