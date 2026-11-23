@@ -1,7 +1,8 @@
 // criticalUX Figma plugin: main thread (runs inside Figma's sandbox).
 // Depends on rules.js and engine.js, which build.js concatenates in front of this file.
 
-figma.showUI(__html__, { width: 440, height: 680, themeColors: true });
+figma.showUI(__html__, { width: 360, height: 600, themeColors: true });
+try { figma.root.setRelaunchData({ open: "Audit screens against criticalUX rules" }); } catch (e) { /* manifest without relaunch buttons */ }
 
 var MAX_NODES = 4000;
 var FONT = { r: { family: "Inter", style: "Regular" }, m: { family: "Inter", style: "Medium" }, s: { family: "Inter", style: "Semi Bold" }, b: { family: "Inter", style: "Bold" } };
