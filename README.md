@@ -91,7 +91,7 @@ For better answers, tell Claude the **market**, **who uses it**, **what can go w
 | `money-flows` | Amount entry, FX and fee quotes, payee verification (UK CoP, EU VoP, Australia), review screens, scam warnings, decline copy, disputes, KYC, passkeys, SCA/3DS, consent, credit and BNPL disclosure, a dark-pattern catalogue, B2B/B2C/B2B2C/D2C models, POS, ATMs, QR, USSD, wallets, notifications, AI-agent payments, rules for the UK, EU, US, India, Brazil, Singapore, Australia and more, and case studies (Wise, Monzo, Apple Card, Google Pay/Tez, PhonePe, Stripe, Nubank, Robinhood, M-Pesa…) |
 | `critical-domains` | Healthcare (dose notation, EHR use errors, alert fatigue, FDA/IEC 62366-1 validation, risk communication), civic services (GOV.UK, USWDS, question pages), digital identity (NIST 800-63-4, EU wallet), control rooms and fleet operations (ISA-101, alarm budgets, dark cockpit, situation awareness) |
 
-Plus `tokens/` (original, contrast-checked semantic tokens in JSON, CSS and Figma formats) and `scripts/` (contrast and token checks).
+Plus `tokens/` (original, contrast-checked semantic tokens in JSON, CSS and Figma formats), `scripts/` (contrast and token checks) and [`figma-plugin/`](figma-plugin/README.md): audit a Figma frame against these rules, add markers to the canvas, insert safe patterns and browse every rule, with an optional deep review by Claude.
 
 **Designing for cars, motorcycles or scooters?** The automotive skill now lives in its own repo: [automotive-hmi-ux](https://github.com/Sthitapragna-009/automotive-hmi-ux).
 
